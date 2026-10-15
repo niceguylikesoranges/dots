@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+thumbnail_dir="${XDG_CACHE_HOME:-$HOME/.cache}/cliphist/thumbnails"
+mkdir -p "$thumbnail_dir"
+
+cliphist_list=$(cliphist list)
+[ -z "$cliphist_list" ] && exit
+
+build_menu() {
+  local line id rest mime ext thumbnail_file
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    id=${line%%$'\t'*}
+    rest=${line#*$'\t'}
+
+    # Only binary entries can be images, so skip decoding plain text
+    if [[ "$rest" == "[[ binary data"* ]]; then
+      mime=$(cliphist decode "$id" 2>/dev/null | file -b --mime-type -)
+      if [[ "$mime" == image/* ]]; then
+        ext="${mime#image/}"
+        [ "$ext" == "jpeg" ] && ext="jpg"
+        thumbnail_file="$thumbnail_dir/$id.$ext"
+        [ -f "$thumbnail_file" ] || cliphist decode "$id" >"$thumbnail_file" 2>/dev/null
+        if [ -f "$thumbnail_file" ]; then
+          # printf '%s' never interprets backslashes in the clipboard text
+          printf '%s\t%s\0icon\x1f%s\n' "$id" "[Image]" "$thumbnail_file"
+          continue
+        fi
+      fi
+    fi
+    printf '%s\t%s\n' "$id" "$rest"
+  done <<<"$cliphist_list"
+}
+
+# -format s returns the selected line itself, so no index/line-number mapping is needed
+selected=$(build_menu | rofi -dmenu -show-icons -i -p "Clipboard" -format s)
+[ -z "$selected" ] && exit
+
+# cliphist decode reads the leading id from the line
+printf '%s' "$selected" | cliphist decode | wl-copy
