@@ -23,3 +23,4 @@ eval "$(starship init zsh)"
 
 alias emacs="emacs -nw"
 alias ff="fastfetch --structure Title:Separator:OS:Host:Kernel:Uptime:Shell:Display:DE:WM:Terminal:CPU:GPU:Memory:Disk:Break:Colors"
+alias clear='clear -x; printf "\e[3J"'

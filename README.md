@@ -3,7 +3,6 @@
 ## Hello
 These are my personal dots which work for me on my devices. If something doesn't work on your end, investigate and modify as you'd like.
 
-## Preview
 ![Preview](preview.png)
 
 ## TODO
