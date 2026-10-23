@@ -36,6 +36,8 @@ foot
 fuzzel
 ghostscript
 git
+grub
+grub-btrfs
 gst-plugin-pipewire
 htop
 hyprland
@@ -44,6 +46,7 @@ hyprpicker
 hyprpolkitagent
 hyprshot
 impala
+inotify-tools
 intel-media-driver
 intel-ucode
 iwd
@@ -53,7 +56,6 @@ less
 libpulse
 libva-intel-driver
 libvpl
-limine
 linux
 linux-firmware
 ly
@@ -67,6 +69,7 @@ noto-fonts-emoji
 nwg-look
 obs-studio
 openssh
+os-prober
 pipewire
 pipewire-alsa
 pipewire-jack
