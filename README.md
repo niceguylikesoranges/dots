@@ -1,18 +1,24 @@
 # Arch Hyprland Dots - Minimal
 
-![Preview](preview.png)
+![Preview1](preview1.png)
+![Preview2](preview2.png)
 
 ## Hello
+
 These are my personal dots which work for me on my devices. If something doesn't work on your end, investigate and modify as you'd like.
 
 ## TODO
+
 - DOOM Emacs
 - LazyVim
 - Starship
 
 ## Packages
+
 ### Official Repos
+
 <!-- pacman -Qneq -->
+
 base
 base-devel
 bluez
@@ -120,7 +126,9 @@ zsh-autosuggestions
 zsh-syntax-highlighting
 
 ### AUR
+
 <!-- pacman -Qmeq -->
+
 brave-bin
 yay
 yay-debug
