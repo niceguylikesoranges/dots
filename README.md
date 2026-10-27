@@ -19,6 +19,8 @@ These are my personal dots which work for me on my devices. If something doesn't
 
 <!-- pacman -Qneq -->
 
+7zip
+ark
 base
 base-devel
 bluez
@@ -37,6 +39,7 @@ efibootmgr
 emacs
 fastfetch
 fd
+filezilla
 firefox
 foot
 fuzzel
@@ -55,7 +58,9 @@ impala
 inotify-tools
 intel-media-driver
 intel-ucode
+iw
 iwd
+keyd
 kitty
 kvantum
 less
@@ -72,6 +77,7 @@ networkmanager
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+npm
 nwg-look
 obs-studio
 openssh
@@ -101,6 +107,7 @@ ttf-jetbrains-mono-nerd
 ttf-liberation
 ttf-nerd-fonts-symbols-mono
 ufw
+unzip
 uwsm
 vim
 vlc
