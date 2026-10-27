@@ -1,29 +1,29 @@
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 13px;
-    min-height: 0;
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  min-height: 0;
 }
 
 window#waybar {
-    background-color: #000000;
-    color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 #workspaces button {
-    padding: 0 8px;
-    background-color: transparent;
-    color: #666666;
+  padding: 0 8px;
+  background-color: transparent;
+  color: #666666;
 }
 
 #workspaces button.active {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 #workspaces button:hover {
-    background-color: #111111;
-    color: #ffffff;
+  background-color: #111111;
+  color: #ffffff;
 }
 
 #clock,
@@ -31,17 +31,22 @@ window#waybar {
 #network,
 #cpu,
 #memory,
+#custom-power,
 #battery,
 #tray,
 #window {
-    padding: 0 10px;
-    color: #cccccc;
+  padding: 0 10px;
+  color: #cccccc;
 }
 
 #clock {
-    color: #ffffff;
-    font-weight: bold;
+  color: #ffffff;
+  font-weight: bold;
 }
 
-#battery.warning { color: #f9e2af; }
-#battery.critical { color: #f38ba8; }
+#battery.warning {
+  color: #f9e2af;
+}
+#battery.critical {
+  color: #f38ba8;
+}
