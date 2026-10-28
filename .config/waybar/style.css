@@ -27,6 +27,7 @@ window#waybar {
 }
 
 #clock,
+#custom-recording,
 #pulseaudio,
 #network,
 #cpu,

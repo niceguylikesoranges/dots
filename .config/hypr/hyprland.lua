@@ -59,6 +59,7 @@ hl.on("hyprland.start", function()
 	-- Execute daemons separately
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("dunst")
 
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono Nerd Font 10'")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface document-font-name 'JetBrainsMono Nerd Font 10'")
@@ -368,6 +369,9 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.local/bin/cliphist-rofi-img"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist wipe"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"))
+
+-- Record
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("~/.local/bin/record"))
 
 -- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))

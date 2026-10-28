@@ -42,7 +42,6 @@ fd
 filezilla
 firefox
 foot
-fuzzel
 ghostscript
 git
 grub
@@ -66,6 +65,7 @@ kvantum
 less
 libpulse
 libva-intel-driver
+libva-utils
 libvpl
 linux
 linux-firmware
@@ -117,6 +117,7 @@ vulkan-intel
 vulkan-nouveau
 vulkan-radeon
 waybar
+wf-recorder
 wget
 wireplumber
 wl-clipboard

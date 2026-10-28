@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+dir="$HOME/Videos/Recordings"
+mkdir -p "$dir"
+file="$dir/rec_$(date +%Y%m%d_%H%M%S).mp4"
+
+# Toggle: if already recording, stop
+if pgrep -x wf-recorder >/dev/null; then
+  pkill -SIGINT -x wf-recorder
+  timeout 2 notify-send "Recording stopped" "Saved to $dir"
+  exit 0
+fi
+
+choice=$(printf "Region\nRegion + system audio\nRegion + system audio + mic\nFull screen\nFull screen + system audio\nFull screen + system audio + mic" |
+  rofi -dmenu -no-custom -theme-str 'inputbar { enabled: false; }')
+[ -z "$choice" ] && exit 0
+
+args=(-f "$file")
+for r in /dev/dri/renderD*; do
+  [ -e "$r" ] || continue
+  if vainfo --display drm --device "$r" 2>/dev/null | grep -q 'H264.*EncSlice'; then
+    args+=(-c h264_vaapi -d "$r")
+    break
+  fi
+done
+sink=$(pactl get-default-sink)
+
+if [[ "$choice" == *"system audio + mic"* ]]; then
+  # Temporary mix of speaker monitor + mic
+  m1=$(pactl load-module module-null-sink sink_name=rec_mix)
+  m2=$(pactl load-module module-loopback source="${sink}.monitor" sink=rec_mix)
+  m3=$(pactl load-module module-loopback source="$(pactl get-default-source)" sink=rec_mix)
+  trap 'pactl unload-module "$m3"; pactl unload-module "$m2"; pactl unload-module "$m1"' EXIT
+  args+=(--audio="rec_mix.monitor")
+elif [[ "$choice" == *"system audio"* ]]; then
+  args+=(--audio="${sink}.monitor")
+fi
+
+if [[ "$choice" == Region* ]]; then
+  geom=$(slurp) || exit 0
+  args+=(-g "$geom")
+else
+  mon=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+  args+=(-o "$mon")
+fi
+
+timeout 2 notify-send "Recording started" "Run the script again to stop" &
+wf-recorder "${args[@]}"
