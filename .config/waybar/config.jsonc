@@ -6,14 +6,12 @@
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["custom/clock"],
   "modules-right": [
+    "tray",
     "custom/recording",
     "pulseaudio",
     "network",
-    "cpu",
-    "memory",
     "custom/power",
     "battery",
-    "tray",
   ],
 
   "hyprland/workspaces": {
@@ -34,7 +32,7 @@
     "on-scroll-down": "pkill -RTMIN+8 waybar",
   },
   "custom/recording": {
-    "exec": "pgrep -x wf-recorder >/dev/null && echo '● REC' || echo '⏺'",
+    "exec": "pgrep -x wf-recorder >/dev/null && echo '● REC' || echo ''",
     "interval": 1,
     "on-click": "~/.local/bin/record",
     "tooltip": false,

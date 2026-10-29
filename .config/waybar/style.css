@@ -45,6 +45,10 @@ window#waybar {
   font-weight: bold;
 }
 
+#custom-recording {
+  color: #f38ba8;
+}
+
 #battery.warning {
   color: #f9e2af;
 }
