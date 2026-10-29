@@ -102,6 +102,9 @@ bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true, descri
 bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "Play / pause" })
 bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, description = "Play / pause" })
 bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true, description = "Previous track" })
+bind(mainMod .. " + comma", hl.dsp.exec_cmd("playerctl previous"), { description = "Previous track" })
+bind(mainMod .. " + period", hl.dsp.exec_cmd("playerctl next"), { description = "Next track" })
+bind(mainMod .. " + slash", hl.dsp.exec_cmd("playerctl play-pause"), { description = "Play / pause" })
 
 -- Clipboard and capture
 bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.local/bin/cliphist-rofi-img"), { description = "Clipboard history" })
