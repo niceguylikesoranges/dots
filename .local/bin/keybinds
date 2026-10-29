@@ -13,15 +13,15 @@ mapfile -t files < <(find -L "$cfg" -name '*.lua' 2>/dev/null)
 list=$(perl -ne '
   chomp;
 
-  # Join multi-line binds:  hl.bind(  ...  \n  )  into one line
+  # Join multi-line binds:  bind(  ...  \n  )  into one line
   if (defined $buf) {
     $buf .= " " . $_;
     if (/^\s*\)\s*$/) { $_ = $buf; undef $buf } else { next }
-  } elsif (/^\s*(?:local\s+\w+\s*=\s*)?hl\.bind\(\s*$/) {
+  } elsif (/^\s*(?:local\s+\w+\s*=\s*)?(?:hl\.)?bind\(\s*$/) {
     $buf = $_; next;
   }
 
-  next unless /^\s*(?:local\s+\w+\s*=\s*)?hl\.bind\(\s*(.+?)\s*,\s*((?:hl\.dsp\.|function).*)$/;
+  next unless /^\s*(?:local\s+\w+\s*=\s*)?(?:hl\.)?bind\(\s*(.+?)\s*,\s*((?:hl\.dsp\.|function).*)$/;
   my ($key, $rest) = ($1, $2);
 
   # Turn  mainMod .. " + Q"  into  SUPER + Q
@@ -33,6 +33,7 @@ list=$(perl -ne '
 
   my $act;
   if    ($rest =~ /description\s*=\s*"([^"]*)"/)                        { $act = $1 }
+  elsif ($rest =~ /lockedOpts\(\s*"([^"]*)"\s*\)/)                      { $act = $1 }
   elsif ($rest =~ /^hl\.dsp\.exec_cmd\(\s*"((?:[^"\\]|\\.)*)"/)         { $act = "run: $1" }
   elsif ($rest =~ /^hl\.dsp\.exec_cmd\(\s*([A-Za-z_]+)/)                { $act = "run: $1" }
   elsif ($rest =~ /^function/)                                          { $act = "custom function" }
