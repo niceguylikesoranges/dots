@@ -23,6 +23,7 @@ These are my personal dots which work for me on my devices. If something doesn't
 ark
 base
 base-devel
+bluetui
 bluez
 bluez-utils
 brightnessctl

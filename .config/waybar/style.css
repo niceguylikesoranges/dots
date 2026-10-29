@@ -28,6 +28,7 @@ window#waybar {
 
 #clock,
 #custom-recording,
+#bluetooth,
 #pulseaudio,
 #network,
 #cpu,
@@ -47,6 +48,14 @@ window#waybar {
 
 #custom-recording {
   color: #f38ba8;
+}
+
+#bluetooth.connected {
+  color: #89b4fa;
+}
+#bluetooth.off,
+#bluetooth.disabled {
+  color: #6c7086;
 }
 
 #battery.warning {

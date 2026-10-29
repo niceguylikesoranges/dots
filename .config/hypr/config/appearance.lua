@@ -1,6 +1,5 @@
 ---@diagnostic disable-next-line: undefined-global
 local hl = hl
-local programs = require("config.programs")
 
 hl.config({
 	general = {
@@ -52,9 +51,4 @@ hl.config({
 		force_default_wallpaper = -1,
 		disable_hyprland_logo = false,
 	},
-})
-
-hl.window_rule({
-	match = { class = programs.browserClass },
-	opacity = "1.0 override 1.0 override 1.0 override",
 })

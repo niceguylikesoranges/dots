@@ -18,6 +18,11 @@ bind(
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"),
 	{ description = "Log out" }
 )
+hl.bind(
+	mainMod .. " + SHIFT + B",
+	hl.dsp.exec_cmd("kitty --class bluetui -e bluetui"),
+	{ description = "Bluetooth manager" }
+)
 
 -- Window management
 bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close(), { description = "Close window" })
@@ -85,18 +90,10 @@ local function lockedOpts(description)
 	return { locked = true, repeating = true, description = description }
 end
 
-bind(
-	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	lockedOpts("Volume up")
-)
+bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), lockedOpts("Volume up"))
 bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), lockedOpts("Volume down"))
 bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), lockedOpts("Mute speakers"))
-bind(
-	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	lockedOpts("Mute microphone")
-)
+bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), lockedOpts("Mute microphone"))
 bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), lockedOpts("Brightness up"))
 bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), lockedOpts("Brightness down"))
 
@@ -114,8 +111,4 @@ bind(
 	hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"),
 	{ description = "Screenshot region to clipboard" }
 )
-bind(
-	mainMod .. " + R",
-	hl.dsp.exec_cmd("~/.local/bin/record"),
-	{ description = "Screen recorder (start/stop)" }
-)
+bind(mainMod .. " + R", hl.dsp.exec_cmd("~/.local/bin/record"), { description = "Screen recorder (start/stop)" })
