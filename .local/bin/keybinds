@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Rofi cheat sheet of Hyprland keybinds, read from the Lua config files.
+# Uses the bind's `description` if set, otherwise shows what it runs/does.
+
+cfg="${HYPR_CONFIG_DIR:-$HOME/.config/hypr}"
+
+mapfile -t files < <(find -L "$cfg" -name '*.lua' 2>/dev/null)
+[ "${#files[@]}" -eq 0 ] && {
+  notify-send "Keybinds" "No .lua files found in $cfg"
+  exit 1
+}
+
+list=$(perl -ne '
+  chomp;
+
+  # Join multi-line binds:  hl.bind(  ...  \n  )  into one line
+  if (defined $buf) {
+    $buf .= " " . $_;
+    if (/^\s*\)\s*$/) { $_ = $buf; undef $buf } else { next }
+  } elsif (/^\s*(?:local\s+\w+\s*=\s*)?hl\.bind\(\s*$/) {
+    $buf = $_; next;
+  }
+
+  next unless /^\s*(?:local\s+\w+\s*=\s*)?hl\.bind\(\s*(.+?)\s*,\s*((?:hl\.dsp\.|function).*)$/;
+  my ($key, $rest) = ($1, $2);
+
+  # Turn  mainMod .. " + Q"  into  SUPER + Q
+  $key =~ s/mainMod\s*\.\.\s*"\s*\+?\s*/SUPER + /g;
+  $key =~ s/"//g;
+  $key =~ s/\s*\.\.\s*/ /g;
+  $key =~ s/\s+/ /g;
+  $key =~ s/\b(key|i)$/0-9/;       # workspace loops
+
+  my $act;
+  if    ($rest =~ /description\s*=\s*"([^"]*)"/)                        { $act = $1 }
+  elsif ($rest =~ /^hl\.dsp\.exec_cmd\(\s*"((?:[^"\\]|\\.)*)"/)         { $act = "run: $1" }
+  elsif ($rest =~ /^hl\.dsp\.exec_cmd\(\s*([A-Za-z_]+)/)                { $act = "run: $1" }
+  elsif ($rest =~ /^function/)                                          { $act = "custom function" }
+  else {
+    $rest =~ s/^hl\.dsp\.//;
+    $rest =~ s/\s*,\s*\{[^{}]*\}\s*\)\s*$//;
+    $rest =~ s/\)\s*$// if ($rest =~ tr/(//) < ($rest =~ tr/)//);
+    $act = $rest;
+  }
+  print "$key\t$act\n";
+' "${files[@]}" | sort -u | column -t -s $'\t')
+
+[ -z "$list" ] && {
+  notify-send "Keybinds" "No binds found in $cfg"
+  exit 1
+}
+
+printf '%s\n' "$list" | rofi -dmenu -i -no-custom -p "Keybinds" \
+  -theme-str 'window { width: 40%; } listview { lines: 15; }'
